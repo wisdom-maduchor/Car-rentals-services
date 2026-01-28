@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: real-rent-car
+    runtime: docker
+    plan: free
+    region: oregon
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /var/www/html/database/database.sqlite
+    disk:
+      name: sqlite-data
+      mountPath: /var/www/html/database
+      sizeGB: 1

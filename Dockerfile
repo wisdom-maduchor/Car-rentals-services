@@ -6,11 +6,13 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Stage 2: Build Backend (PHP)
-FROM php:8.2-fpm-alpine
+# Stage 2: Build Backend (PHP + Nginx)
+# Using serversideup for a simplified production-ready PHP+Nginx image
+FROM serversideup/php:8.2-fpm-nginx-alpine
 WORKDIR /var/www/html
 
-# Install system dependencies and PHP extensions
+# Switch to root to install dependencies
+USER root
 RUN apk add --no-cache \
     git \
     curl \
@@ -20,22 +22,18 @@ RUN apk add --no-cache \
     unzip \
     oniguruma-dev
 
+# Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
 # Copy application code
-COPY . .
+COPY --chown=www-data:www-data . .
 
 # Copy built frontend assets from Stage 1
-COPY --from=frontend-builder /app/public/build ./public/build
+COPY --from=frontend-builder --chown=www-data:www-data /app/public/build ./public/build
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-EXPOSE 9000
-CMD ["php-fpm"]
+# Set entrypoint to use serversideup's optimized runner
+# This handles both Nginx and PHP-FPM
+USER www-data
