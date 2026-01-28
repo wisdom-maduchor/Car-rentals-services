@@ -1,3 +1,10 @@
+databases:
+  - name: real-rent-car-db
+    databaseName: real_rent_car
+    user: admin
+    plan: free
+    region: oregon
+
 services:
   - type: web
     name: real-rent-car
@@ -12,10 +19,24 @@ services:
       - key: APP_KEY
         generateValue: true
       - key: DB_CONNECTION
-        value: sqlite
+        value: mysql
+      - key: DB_HOST
+        fromDatabase:
+          name: real-rent-car-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: real-rent-car-db
+          property: port
       - key: DB_DATABASE
-        value: /var/www/html/database/database.sqlite
-    disk:
-      name: sqlite-data
-      mountPath: /var/www/html/database
-      sizeGB: 1
+        fromDatabase:
+          name: real-rent-car-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: real-rent-car-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: real-rent-car-db
+          property: password
