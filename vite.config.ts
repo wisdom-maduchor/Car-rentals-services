@@ -12,7 +12,7 @@ export default defineConfig({
             refresh: true,
         }),
         tailwindcss(),
-        wayfinder({
+        !process.env.VERCEL && wayfinder({
             formVariants: true,
         }),
         vue({
@@ -23,5 +23,5 @@ export default defineConfig({
                 },
             },
         }),
-    ],
+    ].filter(Boolean),
 });
