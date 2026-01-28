@@ -4,28 +4,24 @@ import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
-export default defineConfig(({ command }) => {
-    const isVercel = !!process.env.VERCEL;
-
-    return {
-        plugins: [
-            laravel({
-                input: ['resources/js/app.ts'],
-                ssr: 'resources/js/ssr.ts',
-                refresh: true,
-            }),
-            tailwindcss(),
-            !isVercel && wayfinder({
-                formVariants: true,
-            }),
-            vue({
-                template: {
-                    transformAssetUrls: {
-                        base: null,
-                        includeAbsolute: false,
-                    },
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: ['resources/js/app.ts'],
+            ssr: 'resources/js/ssr.ts',
+            refresh: true,
+        }),
+        tailwindcss(),
+        !process.env.VERCEL && wayfinder({
+            formVariants: true,
+        }),
+        vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
                 },
-            }),
-        ].filter(Boolean),
-    };
+            },
+        }),
+    ].filter(Boolean),
 });

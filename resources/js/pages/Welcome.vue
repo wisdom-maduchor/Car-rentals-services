@@ -26,10 +26,10 @@ const homeCars = $page.props.homeCars as Car[];
 
 <template>
     <Head>
-        <title>Real Rent Car - Premium Car Rental Service</title>
+        <title>CARRENTALPLUG - Premium Car Rental Service</title>
         <meta
             name="description"
-            content="Real Rent Car is a premium car rental platform providing reliable transportation solutions. We offer a wide range of cars for rent, from economy to luxury, for short and long term rentals."
+            content="CARRENTALPLUG is a premium car rental platform providing reliable transportation solutions. We offer a wide range of cars for rent, from economy to luxury, for short and long term rentals."
         />
     </Head>
 

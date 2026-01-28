@@ -188,7 +188,7 @@ const sendTicket = () => {
                                         Email
                                     </h4>
                                     <p class="text-gray-600">
-                                        info@realrentcar.com
+                                        info@carrentalplug.com
                                     </p>
                                 </div>
 
