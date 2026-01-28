@@ -8,8 +8,12 @@
     },
     "routes": [
         {
-            "src": "/(css|js|images|fonts|favicons)/(.*)",
-            "dest": "/public/$1/$2"
+            "src": "/build/(.*)",
+            "dest": "/public/build/$1"
+        },
+        {
+            "src": "/(favicon.ico|robots.txt|images/.*|assets/.*)",
+            "dest": "/public/$1"
         },
         {
             "src": "/(.*)",
